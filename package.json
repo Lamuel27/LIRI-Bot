@@ -16,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/Lamuel27/LIRI-Bot/issues"
   },
-  "homepage": "https://github.com/Lamuel27/LIRI-Bot#readme"
+  "homepage": "https://github.com/Lamuel27/LIRI-Bot#readme",
+  "dependencies": {
+    "dotenv": "^6.1.0",
+    "fs": "0.0.1-security",
+    "moment": "^2.22.2",
+    "node-spotify-api": "^1.0.7",
+    "request": "^2.88.0"
+  }
 }
