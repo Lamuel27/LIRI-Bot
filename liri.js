@@ -4,13 +4,17 @@ require("dotenv").config();
 var keys = require("./keys.js");
 
 //require node packages
-var spotify1 = require("node-spotify-api");
+var Spotify = require('node-spotify-api');
 var request = require("request");
 var moment = require("moment");
+var axios = require("axios");
 var fs = require("fs");
 
 //attach the key to a variable
-var spotify2 = new spotify1(keys.spotify);
+var spotify = new Spotify({
+    id: "ed9cb7ebdb954b0d896dd18b79d25535",
+    secret: "54a48627b105446ba0f931a674e2c62d"
+});
 
 //command line arguments
 var arg = process.argv;
@@ -78,7 +82,7 @@ function liriBot() {
                 userInput1 = "Mr%20Nobody";
                 userInput2 = userInput1.replace(/%20/g, " ");
             }
-
+            //call to omdb api
             var queryURL = "https://www.omdbapi.com/?t=" + userInput1 + "&y=&plot=short&apikey=584a2704"
             request(queryURL, function (error, response, body) {
                 if (!error && response.statusCode === 200) {
@@ -96,7 +100,36 @@ function liriBot() {
             });
 
             break;
+        case "spotify-this":
+            //If no song is provided
+            if (!userInput1) {
+                userInput1 = "The%20Sign%20Ace%20of%20Base";
+                userInput2 = userInput1.replace(/%20/g, " ");
 
+            }
+            spotify.search({ type: 'track', query: userInput1 }, function (error, data) {
+                if (error) {
+                    console.log('Error occurred: ' + error);
+                } else if (!error) {
+                    //artists
+                    var search = data.tracks.items[0];
+                    for (var j = 0; j < search.artists.length; j++) {
+                        console.log("Artists:  " + search.artists[j].name);
+                    }
+                    console.log("\n////////////////////////\n");
+                    //song name
+                    console.log("Song Title: " + search.name);
+                    console.log("\n////////////////////////\n");
+                    //link to a preview
+                    console.log("Click the Link to Preview: " + search.preview_url);
+                    console.log("\n////////////////////////\n");
+                    //album name
+                    console.log("Album Name: " + search.album.name);
+                }
+            });
+            break;
+        case "do-what-it-says":
     }
 }
+
 
