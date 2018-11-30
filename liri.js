@@ -21,7 +21,6 @@ var arg = process.argv;
 
 //user input commands
 var userInput1 = "";
-var userInput2 = "";
 
 // get the user input for everything via forloop and make it so you can type more than one word
 for (var i = 3; i < arg.length; i++) {
@@ -87,20 +86,35 @@ function liriBot() {
             request(queryURL, function (error, response, body) {
                 if (!error && response.statusCode === 200) {
                     var data = JSON.parse(body);
+                    // Title of movie
                     console.log("Title: " + data.Title)
+                    console.log("\n////////////////////////\n");
+                    // release year
                     console.log("Release Year: " + data.Year)
+                    console.log("\n////////////////////////\n");
+                    // OMDB rating
                     console.log("OMDB Rating: " + data.Ratings[0].Value)
+                    console.log("\n////////////////////////\n");
+                    // rotten tomatoes rating
                     console.log("Rotten Tomatoes Rating: " + data.Ratings[1].Value)
+                    console.log("\n////////////////////////\n");
+                    // where it was produced
                     console.log("Country of Production: " + data.Country)
+                    console.log("\n////////////////////////\n");
+                    // Language
                     console.log("Language: " + data.Language)
+                    console.log("\n////////////////////////\n");
+                    // plot of the movie
                     console.log("Plot of the Movie: " + data.Plot)
+                    console.log("\n////////////////////////\n");
+                    // list of actors
                     console.log("Actors: " + data.Actors)
 
                 }
             });
 
             break;
-        case "spotify-this":
+        case "spotify-this-song":
             //If no song is provided
             if (!userInput1) {
                 userInput1 = "The%20Sign%20Ace%20of%20Base";
@@ -128,8 +142,23 @@ function liriBot() {
                 }
             });
             break;
-        case "do-what-it-says":
+        // case "do-what-it-says":
     }
 }
 
+if (command1 === "do-what-it-says") {
+    var fs = require("fs");
+    // pull from the Random.txt file
+    fs.readFile("random.txt", "utf8", function (error, data) {
+        var dataArray = data.split(",");
+        // var runAll = dataArray[Math.floor(Math.random() * dataArray.length)].split(",");
+        userInput1 = dataArray[1];
+        userInput2 = userInput1.replace(/%20/g, " ");
+        command1 = dataArray[0];
+        if (error) {
+            console.log(error);
+        }
+        liriBot();
+    })
+}
 
