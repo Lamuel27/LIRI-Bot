@@ -15,6 +15,9 @@ node liri.js movie-this "movie name here"
 
 node liri.js "do-what-it-says"
 
+Here is a video showing a demo of the Liri application!
+[![Watch the video](images/capture.png)](https://www.youtube.com/watch?v=VK5kSVtBiVY&feature=youtu.be)
+
 ## Built With
 
 * JavaScript, jQuery
